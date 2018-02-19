@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
 
-import Header from './Header'
+import Header from './Header';
+import Landing from './Landing';
+import Dashboard from './Dashboard';
 
 
-class App extends React.Component {
+
+class App extends Component {
 	componentDidMount() {
+		console.log('app prop', this.props);
 		this.props.fetchUser();
 	}
 
@@ -17,7 +21,8 @@ class App extends React.Component {
 				<BrowserRouter>
 					<div>
 						<Header />
-						<Route exact path="/" component={Header} />
+						<Route exact path="/" component={Landing} />
+						<Route path="/dashboard" component={Dashboard}/>
 					</div>
 				</BrowserRouter>
 			</div>

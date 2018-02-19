@@ -6,18 +6,18 @@ class Header extends Component {
 	renderContent() {
 		switch(this.props.auth) {
 			case null:
-				return 'Logging in'
+				return;
 			case false:
-				return 'Please Log In'
+				return <a href="/auth/spotify">Login with Spotify</a>;
 			default:
-				return 'Hello'
+				return <a href="/api/logout">Logout</a>;
 		}
 	}
 
 	render() {
 		return (
 			<div>
-				<p>{this.renderContent()}</p>
+				{this.renderContent()}
 			</div>
 		);
 	}
