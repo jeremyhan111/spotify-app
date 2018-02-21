@@ -10,9 +10,7 @@ import reducers from './reducers';
 //second is initial state
 //third is apply middleware
 const store = createStore(
-	reducers, 
-	{}, 
-	applyMiddleware(reduxThunk)
+	reducers
 );
 
 ReactDOM.render(

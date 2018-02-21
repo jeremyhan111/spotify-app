@@ -5,42 +5,39 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import Playlists from './Playlists';
 import { placePlaylists } from '../actions';
 
+const spotifyapi = new SpotifyWebApi();
+
 class Dashboard extends Component {
 	constructor(props) {
 		super(props);
-		this.getPlaylists = this.getPlaylists.bind(this);
 		this.handleOnClick = this.handleOnClick.bind(this);
 		this.state = {
 			playlists: []
-		}
+		};
 	}
 
-	getPlaylists() {
-		if (this.props.auth) {
-			const s = new SpotifyWebApi();
-			s.setAccessToken(this.props.auth.accessToken);
-			s.getUserPlaylists(this.props.auth.spotifyId).then((playlists) => {
-				this.setState(() => {
-					return {
-						playlists: playlists.items
-					};
-				});
-			}, (e) => {
-				console.log(e);
+	async doStuff() {
+		if (this.props.auth.user) {
+			spotifyapi.setAccessToken(this.props.auth.user.accessToken);
+			const playlists = await spotifyapi.getUserPlaylists(this.props.auth.user.spotifyId);
+			this.setState(() => {
+				return {
+					playlists: playlists.items
+				}
 			})
 		}
 	}
 
-	handleOnClick() {
-		console.log(this.props);
+	handleOnClick(e) {
+		console.log('current playlists: ', this.state.playlists);
 		this.props.dispatch(placePlaylists(this.state.playlists));
 	}
 
 	render() {
+		this.doStuff();
 		return (
 			<div>
 				<h1>Dashboard</h1>
-				<button onClick={this.getPlaylists}>Get Playlists</button>
 				<Playlists playlists={this.state.playlists}/>
 				<button onClick={this.handleOnClick}><a href='/active'>Let's start!</a></button>
 			</div>
@@ -50,8 +47,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		auth: state.auth,
-		playlists: state.playlists
+		auth: state.auth
 	}
 }
 

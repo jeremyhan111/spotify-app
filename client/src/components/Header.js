@@ -4,10 +4,11 @@ import {connect} from 'react-redux';
 class Header extends Component {
 
 	renderContent() {
-		switch(this.props.auth) {
+		console.log(this.props)
+		switch(this.props.auth.user) {
 			case null:
 				return;
-			case false:
+			case "":
 				return <a href="/auth/spotify">Login with Spotify</a>;
 			default:
 				return <a href="/api/logout">Logout</a>;

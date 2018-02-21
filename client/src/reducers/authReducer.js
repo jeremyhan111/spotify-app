@@ -1,8 +1,13 @@
-export default function(state = null, action) {
-	console.log(action);
+const authReducerDefaultState = {
+	user: null
+}
+
+export default function(state = authReducerDefaultState, action) {
 	switch (action.type) {
 		case 'FETCH_USER':
-			return action.payload || false;
+			return {
+				user: action.user
+			}
 		default:
 			return state;
 	};

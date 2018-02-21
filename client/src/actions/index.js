@@ -1,10 +1,10 @@
-import axios from 'axios';
-
-export const fetchUser = () => (async (dispatch) => {
-		const res = await axios.get('/api/current_user');
-		dispatch({ type: 'FETCH_USER', payload: res.data });
+export const fetchUser = (user) => {
+	return {
+		type: 'FETCH_USER',
+		user
 	}
-);
+
+}
 
 export const placePlaylists = (playlists) => {
 	return { 

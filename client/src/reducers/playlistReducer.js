@@ -1,8 +1,14 @@
-export default function(state = null, action) {
-	console.log(action);
+const playlistReducerDefaultState = {
+	playlists: []
+};
+
+export default function(state = playlistReducerDefaultState, action) {
+	console.log('reducer state', action);
 	switch (action.type) {	
 		case 'PLACE_PLAYLISTS':
-			return action.playlists
+			return {
+				playlists: action.playlists
+			}
 		default:
 			return state;
 	};

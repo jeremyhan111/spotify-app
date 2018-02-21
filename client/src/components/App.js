@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import {connect} from 'react-redux';
-import * as actions from '../actions';
+import { fetchUser } from '../actions';
+import axios from 'axios';
+
 
 import Header from './Header';
 import Landing from './Landing';
@@ -11,9 +13,9 @@ import Active from './Active';
 
 
 class App extends Component {
-	componentDidMount() {
-		console.log('app prop', this.props);
-		this.props.fetchUser();
+	async componentDidMount() {
+		const res = await axios.get('/api/current_user');
+		this.props.dispatch(fetchUser(res.data));
 	}
 
 	render() {
@@ -25,7 +27,6 @@ class App extends Component {
 						<Route exact path="/" component={Landing} />
 						<Route path="/dashboard" component={Dashboard}/>
 						<Route path="/active" component={Active}/>
-
 					</div>
 				</BrowserRouter>
 			</div>
@@ -33,4 +34,4 @@ class App extends Component {
 	}	
 };
 
-export default connect(null, actions)(App); //pass in action creators
+export default connect()(App); //pass in action creators

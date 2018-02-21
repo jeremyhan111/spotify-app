@@ -2,7 +2,6 @@ import React from 'react';
 import Playlist from './Playlist';
 
 const Playlists = (props) => {
-	console.log('hi', props.playlists)
 	return (
 		<div>
 			<h1>Playlists</h1>
