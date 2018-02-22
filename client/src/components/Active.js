@@ -5,7 +5,6 @@ import VotingSystem from './VotingSystem';
 import { removeTopSong } from '../actions'
 const spotifyapi = new SpotifyWebApi();
 
-
 class Active extends Component {
 	constructor(props) {
 		super(props);
