@@ -1,13 +1,16 @@
 import React from 'react';
+import { addTopSong } from '../actions';
+import { connect } from 'react-redux';
 
 const Track = (props) => {
 	return (
 		<li><button onClick={(e) => {
-			props.onClick(props.track.track)
+			console.log(props);
+			props.dispatch(addTopSong(props.track.track));
 		}}>
 			{props.track.track.name}
 		</button></li>
 	);
 }
 
-export default Track
+export default connect()(Track);

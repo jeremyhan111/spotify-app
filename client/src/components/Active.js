@@ -40,10 +40,14 @@ class Active extends Component {
 	}
 
 
+
+
 	render() {
+		console.log(this.props);
 		return (
 			<div>
 				<h1>Active Page</h1>
+				<button onClick={()=>{console.log(this.props)}}>Check Props</button>
 				<h3>Now playing</h3>
 				{this.state.playback ? <p>{this.state.playback.item.name}</p> : <p>Spotify is off</p>}
 
@@ -58,6 +62,7 @@ class Active extends Component {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
+		topSongs: state.topSongs
 	}
 }
 

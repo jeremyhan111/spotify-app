@@ -4,8 +4,6 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import Track from './Track';
 const spotifyapi = new SpotifyWebApi();
 
-
-
 class VotingSystem extends Component {
 	constructor(props) {
 		super(props);
@@ -54,7 +52,7 @@ class VotingSystem extends Component {
 
 
 	render() {
-		console.log(this.state);
+		console.log('in render', this.state);
 		return (
 			<div>
 				<p>This is the voting system</p>

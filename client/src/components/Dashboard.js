@@ -38,6 +38,7 @@ class Dashboard extends Component {
 		return (
 			<div>
 				<h1>Dashboard</h1>
+				
 				<Playlists playlists={this.state.playlists}/>
 				<button onClick={this.handleOnClick}><Link to={'/active'}>Let's start</Link></button>
 			</div>
