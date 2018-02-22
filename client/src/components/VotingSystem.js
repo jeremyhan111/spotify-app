@@ -7,34 +7,33 @@ const spotifyapi = new SpotifyWebApi();
 class VotingSystem extends Component {
 	constructor(props) {
 		super(props);
-		this.getSongs = this.getSongs.bind(this);
-		this.onClick = this.onClick.bind(this);
+		// this.onClick = this.onClick.bind(this);
 		this.state = {
-			songs: [],
-			topSongs: {}
+			songs: []
 		}
 	}
 
-	onClick (track) {
-		this.setState((prevState) => {
-			var newState = {
-				topSongs: {
-					...prevState.topSongs
-				}
-			}
+	// onClick (track) {
+	// 	this.setState((prevState) => {
+	// 		var newState = {
+	// 			topSongs: {
+	// 				...prevState.topSongs
+	// 			}
+	// 		}
 
-			if (track.name in this.state.topSongs) {
-				newState.topSongs[track.name] += 1
-			} else {
-				newState.topSongs[track.name] = 1
-			}
+	// 		if (track.name in this.state.topSongs) {
+	// 			newState.topSongs[track.name] += 1
+	// 		} else {
+	// 			newState.topSongs[track.name] = 1
+	// 		}
 
-			return newState;
-		})
-	}
+	// 		return newState;
+	// 	})
+	// }
 
 	async getSongs() {
 		if (this.props.auth.user) {
+			console.log(this.props)
 			spotifyapi.setAccessToken(this.props.auth.user.accessToken);
 			var songs = []
 			for (var i = 0; i < this.props.playlists.playlists.length; i++) {
@@ -50,17 +49,17 @@ class VotingSystem extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.getSongs();
+	}
 
 	render() {
-		console.log('in render', this.state);
 		return (
 			<div>
 				<p>This is the voting system</p>
-				<button onClick={this.getSongs}>Populate tracks</button>
 				<ol>
 					{this.state.songs.map((song) => {
-						return <Track track={song}
-									  onClick={this.onClick} />
+						return <Track track={song} />
 					})}
 				</ol>
 

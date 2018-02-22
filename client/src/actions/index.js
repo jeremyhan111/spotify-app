@@ -18,3 +18,10 @@ export const addTopSong = (track) => {
 		track
 	}
 }
+
+export const removeTopSong = (track) => {
+	return {
+		type: 'REMOVE_TOP_SONG',
+		track
+	}
+}
