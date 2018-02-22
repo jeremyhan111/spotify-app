@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
+import { Link } from 'react-router-dom'
 
 import Playlists from './Playlists';
 import { placePlaylists } from '../actions';
@@ -16,7 +17,7 @@ class Dashboard extends Component {
 		};
 	}
 
-	async doStuff() {
+	async getPlaylists() {
 		if (this.props.auth.user) {
 			spotifyapi.setAccessToken(this.props.auth.user.accessToken);
 			const playlists = await spotifyapi.getUserPlaylists(this.props.auth.user.spotifyId);
@@ -29,17 +30,16 @@ class Dashboard extends Component {
 	}
 
 	handleOnClick(e) {
-		console.log('current playlists: ', this.state.playlists);
 		this.props.dispatch(placePlaylists(this.state.playlists));
 	}
 
 	render() {
-		this.doStuff();
+		this.getPlaylists();
 		return (
 			<div>
 				<h1>Dashboard</h1>
 				<Playlists playlists={this.state.playlists}/>
-				<button onClick={this.handleOnClick}><a href='/active'>Let's start!</a></button>
+				<button onClick={this.handleOnClick}><Link to={'/active'}>Let's start</Link></button>
 			</div>
 		);
 	}
@@ -47,7 +47,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		auth: state.auth
+		auth: state.auth,
+		playlists: state.playlists
 	}
 }
 
