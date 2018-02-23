@@ -21,7 +21,8 @@ passport.use(
 	new SpotifyStrategy({
 		clientID,
 		clientSecret,
-		callbackURL
+		callbackURL,
+		proxy: true
 	}, async (accessToken, refreshToken, profile, done) => {
 		const user = await User.findOne({ spotifyId: profile.id });
 		if (user) {
