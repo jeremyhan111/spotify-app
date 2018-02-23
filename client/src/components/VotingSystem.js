@@ -8,28 +8,13 @@ class VotingSystem extends Component {
 	constructor(props) {
 		super(props);
 		// this.onClick = this.onClick.bind(this);
+
 		this.state = {
-			songs: []
+			songs: [{track: {
+				name: 'First'
+			}}]
 		}
 	}
-
-	// onClick (track) {
-	// 	this.setState((prevState) => {
-	// 		var newState = {
-	// 			topSongs: {
-	// 				...prevState.topSongs
-	// 			}
-	// 		}
-
-	// 		if (track.name in this.state.topSongs) {
-	// 			newState.topSongs[track.name] += 1
-	// 		} else {
-	// 			newState.topSongs[track.name] = 1
-	// 		}
-
-	// 		return newState;
-	// 	})
-	// }
 
 	async getSongs() {
 		if (this.props.auth.user) {

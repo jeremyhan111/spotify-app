@@ -9,6 +9,7 @@ import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import Active from './Active';
+import GuestPage from './GuestPage';
 
 
 
@@ -27,6 +28,7 @@ class App extends Component {
 						<Route exact path="/" component={Landing} />
 						<Route path="/dashboard" component={Dashboard}/>
 						<Route path="/active" component={Active}/>
+						<Route path="/guest" component={GuestPage}/>
 					</div>
 				</BrowserRouter>
 			</div>
