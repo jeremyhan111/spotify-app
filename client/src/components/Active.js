@@ -85,7 +85,6 @@ class Active extends Component {
 				<h4>Next song</h4>
 				{<p>{this.getTopSong()}</p>}
 				<h3>Share this link with your friends so they can vote!</h3>
-				<VotingSystem/>
 
 			</div>
 		);
