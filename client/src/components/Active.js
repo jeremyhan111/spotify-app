@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
 import VotingSystem from './VotingSystem';
 import { removeTopSong } from '../actions'
+import { Link } from 'react-router-dom'
 const spotifyapi = new SpotifyWebApi();
 
 class Active extends Component {
@@ -10,6 +11,7 @@ class Active extends Component {
 		super(props);
 		this.getNextSong = this.getNextSong.bind(this);
 		this.getTopSong = this.getTopSong.bind(this);
+		this.timer = null
 		this.state = {
 			playback: null
 		}
@@ -18,7 +20,7 @@ class Active extends Component {
 	componentDidMount() {
 		const interval = 1000;
 
-		setInterval(() => {
+		this.timer = setInterval(() => {
 			if (this.props.auth.user) {
 				console.log('what');
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
@@ -74,17 +76,25 @@ class Active extends Component {
 		return topSong;
 	}
 
+	componentWillUnmount() {
+		console.log('componentWillUnmount');
+		if (this.timer) {
+			clearInterval(this.timer);
+		}
+	}
+
 	render() {
 
 		return (
 			<div>
 				<h1>Active Page</h1>
-				<button onClick={()=>{console.log(this.props.topSongs.topSongs)}}>Check Props</button>
+				<button onClick={()=>{console.log(this.props)}}>Check Props</button>
 				<h3>Now playing</h3>
 				{this.state.playback ? <p>{this.state.playback.item.name}</p> : <p>Spotify is off</p>}
 				<h4>Next song</h4>
 				{<p>{this.getTopSong()}</p>}
 				<h3>Share this link with your friends so they can vote!</h3>
+				<Link to="/guest">Get All Songs</Link>
 
 			</div>
 		);
@@ -94,7 +104,8 @@ class Active extends Component {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
-		topSongs: state.topSongs
+		topSongs: state.topSongs,
+		playlists: state.playlists
 	}
 }
 

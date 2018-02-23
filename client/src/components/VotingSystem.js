@@ -9,11 +9,11 @@ class VotingSystem extends Component {
 		super(props);
 		// this.onClick = this.onClick.bind(this);
 
-		this.state = {
-			songs: [{track: {
-				name: 'First'
-			}}]
-		}
+		this.state = [{
+			track: {
+				name: "First"
+			}
+		}];
 	}
 
 	async getSongs() {
@@ -43,7 +43,7 @@ class VotingSystem extends Component {
 			<div>
 				<p>This is the voting system</p>
 				<ol>
-					{this.state.songs.map((song) => {
+					{this.state.songs && this.state.songs.map((song) => {
 						return <Track track={song} />
 					})}
 				</ol>

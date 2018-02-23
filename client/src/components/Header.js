@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {logOut} from '../actions'
 
 class Header extends Component {
 
@@ -10,7 +11,9 @@ class Header extends Component {
 			case "":
 				return <a href="/auth/spotify">Login with Spotify</a>;
 			default:
-				return <a href="/api/logout">Logout</a>;
+				return <button onClick={()=> {
+					this.props.dispatch(logOut());
+				}}><a href="/api/logout">Logout</a></button>;
 		}
 	}
 

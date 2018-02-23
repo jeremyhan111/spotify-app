@@ -5,6 +5,12 @@ export const fetchUser = (user) => {
 	}
 }
 
+export const logOut = () => {
+	return {
+		type: 'LOG_OUT'
+	}
+};
+
 export const placePlaylists = (playlists) => {
 	return { 
 		type: 'PLACE_PLAYLISTS',
