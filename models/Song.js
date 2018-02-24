@@ -20,6 +20,8 @@ const Song = mongoose.model('Song', {
 	count: {
 		type: Number,
 		required: true
+	}, playlistId: {
+		type: String
 	}
 });
 

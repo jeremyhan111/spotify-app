@@ -11,10 +11,17 @@ export const logOut = () => {
 	}
 };
 
-export const placePlaylists = (playlists) => {
+export const addPlaylist = (playlist) => {
 	return { 
-		type: 'PLACE_PLAYLISTS',
-		playlists
+		type: 'ADD_PLAYLISTS',
+		playlist
+	}
+}
+
+export const removePlaylist = (playlist) => {
+	return {
+		type: 'REMOVE_PLAYLIST',
+		playlist
 	}
 }
 

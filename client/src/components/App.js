@@ -15,6 +15,7 @@ import GuestPage from './GuestPage';
 
 class App extends Component {
 	async componentDidMount() {
+		console.log("helloooo");
 		const res = await axios.get('/api/current_user');
 		this.props.dispatch(fetchUser(res.data));
 	}

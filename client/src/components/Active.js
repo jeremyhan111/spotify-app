@@ -9,7 +9,6 @@ class Active extends Component {
 	constructor(props) {
 		super(props);
 		this.getNextSong = this.getNextSong.bind(this);
-		this.getTopSong = this.getTopSong.bind(this);
 		this.timer = null
 		this.state = {
 			playback: null,
@@ -46,7 +45,6 @@ class Active extends Component {
 						// // }, (e) => {
 						// // 	console.log(e);
 						// // })
-
 						
 					}
 
@@ -77,8 +75,12 @@ class Active extends Component {
 			url: '/api/songs/top',
 		}).then((song) => {
 			this.setState(() => {
+				let topSong = 'Shuffle mode'
+				if (song.data) {
+					topSong = song.data.name
+				}
 				return {
-					topSong: song.data.name
+					topSong
 				};
 			})
 		})
@@ -86,7 +88,6 @@ class Active extends Component {
 	}
 
 	componentWillUnmount() {
-		console.log('componentWillUnmount');
 		if (this.timer) {
 			clearInterval(this.timer);
 		}
@@ -102,11 +103,7 @@ class Active extends Component {
 				<h4>Next song</h4>
 				<p>{this.state.topSong}</p>
 				<h3>Share this link with your friends so they can vote!</h3>
-				{this.props.auth.user && <p>{`whispering-oasis-52041.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
-
-				
-
-				<Link to="/guest">Get All Songs</Link>
+				{this.props.auth.user && <p>{`localhost:3000/user/${this.props.auth.user.spotifyId}`}</p>}
 
 			</div>
 		);
@@ -116,7 +113,6 @@ class Active extends Component {
 const mapStateToProps = (state) => {
 	return {
 		auth: state.auth,
-		topSongs: state.topSongs,
 		playlists: state.playlists
 	}
 }

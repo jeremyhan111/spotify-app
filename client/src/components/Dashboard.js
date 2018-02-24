@@ -12,10 +12,14 @@ const spotifyapi = new SpotifyWebApi();
 class Dashboard extends Component {
 	constructor(props) {
 		super(props);
-		this.handleOnClick = this.handleOnClick.bind(this);
+		this.getPlaylists = this.getPlaylists.bind(this);
 		this.state = {
 			playlists: []
 		};
+	}
+
+	componentDidMount() {
+		setTimeout(this.getPlaylists, 100);
 	}
 
 	async getPlaylists() {
@@ -30,44 +34,14 @@ class Dashboard extends Component {
 		}
 	}
 
-	handleOnClick(e) {
-		//this.props.daispatch(placePlaylists(this.state.playlists));
-		if (this.props.auth.user) {
-
-			spotifyapi.setAccessToken(this.props.auth.user.accessToken);
-
-			this.state.playlists.forEach((playlist) => {
-				spotifyapi.getPlaylistTracks(playlist.owner.id, playlist.id).then((tracks) => {
-					tracks.items.forEach((track) => {
-						axios({
-							method: 'post',
-							url: '/api/songs',
-							data: {
-								name: track.track.name,
-								artist: track.track.artists[0].name,
-								uri: track.track.uri,
-								userId: this.props.auth.user.spotifyId
-							}
-						}).catch((e) => {
-							console.log(e);
-						})
-					})
-				})
-				
-			})
-		}
-
-		
-	}
-
 	render() {
-		this.getPlaylists();
 		return (
 			<div>
-				<h1>Dashboard</h1>
+				<h1>Pick your playlists</h1>
+				<h4>Your guests will be able to vote for their favorite songs from the playlists you pick</h4>
 				
 				<Playlists playlists={this.state.playlists}/>
-				<button onClick={this.handleOnClick}><Link to={'/active'}>Let's start</Link></button>
+				<button><Link to={'/active'}>Let's start</Link></button>
 			</div>
 		);
 	}
@@ -75,8 +49,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		auth: state.auth,
-		playlists: state.playlists
+		auth: state.auth
 	}
 }
 

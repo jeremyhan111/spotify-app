@@ -1,13 +1,13 @@
-const playlistReducerDefaultState = {
-	playlists: []
-};
+const playlistsReducerDefaultState = [];
 
-export default function(state = playlistReducerDefaultState, action) {
+export default function(state = playlistsReducerDefaultState, action) {
 	switch (action.type) {	
-		case 'PLACE_PLAYLISTS':
-			return {
-				playlists: action.playlists
-			}
+		case 'REMOVE_PLAYLIST':
+			return state.filter((playlist) => {
+				return playlist.uri !== action.playlist.uri;
+			});
+		case 'ADD_PLAYLISTS':
+			return [...state, action.playlist];
 		default:
 			return state;
 	};

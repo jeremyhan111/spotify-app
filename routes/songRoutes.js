@@ -9,6 +9,7 @@ module.exports = (app) => {
 			artist: req.body.artist,
 			uri: req.body.uri,
 			userId: req.body.userId,
+			playlistId: req.body.playlistId,
 			count: 0
 		});
 
@@ -18,6 +19,17 @@ module.exports = (app) => {
 			res.status(400).send(e);
 		})
 	})
+
+	app.delete('/api/songs', (req, res) => {
+		Song.remove({
+			playlistId: req.body.playlistId
+		}).then((songs) => {
+			res.send({songs});
+		}).catch((e) => {
+			res.status(400).send();
+		})
+	})
+
 
 	app.get('/api/songs', (req, res) => {
 		Song.find({}).then((songs) => {
