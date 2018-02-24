@@ -67,24 +67,17 @@ module.exports = (app) => {
 		})
 	})
 
-	app.get('/api/songs/:what', (req, res) => {
-		var uri = req.params.what;
-		res.send('hello');
-		// Song.find({
-		// 	uri
-		// }).then((songs) => {
-		// 	res.send(songs);
-		// }).catch((e) => {
-		// 	res.status(400).send();
-		// })
-	})
-
 	
 
-	app.delete('/api/songs/:id', (req, res) => {
-		var id = req.params.id;
+	app.delete('/api/song/:spotifyId/:songName/:artist', (req, res) => {
+		var id = req.params.spotifyId;
+		var songName = req.params.songName;
+		var artist = req.params.artist;
+
 		Song.findOneAndRemove({
-			songId: id
+			name: songName,
+			artist: artist,
+			userId: id
 		}).then((song) => {
 			res.send(song);
 		}).catch((e) => {
@@ -93,4 +86,14 @@ module.exports = (app) => {
 
 	})
 
+	app.delete('/api/songs/:spotifyId', (req, res) => {
+		var id = req.params.spotifyId;
+		Song.remove({
+			userId: id
+		}).then((songs) => {
+			res.send({songs});
+		}).catch((e) => {
+			res.status(400).send();
+		})
+	})
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {logOut} from '../actions'
+import axios from 'axios';
 
 class Header extends Component {
-
 	renderContent() {
 		switch(this.props.auth.user) {
 			case null:
@@ -12,8 +12,11 @@ class Header extends Component {
 				return <a href="/auth/spotify">Login with Spotify</a>;
 			default:
 				return <button onClick={()=> {
-					this.props.dispatch(logOut());
-				}}><a href="/api/logout">Logout</a></button>;
+					axios({
+						method: 'delete',
+						url: `/api/logout/${this.props.auth.user.spotifyId}`
+					})
+				}}><a href={'/api/logout'}>Logout</a></button>;
 		}
 	}
 

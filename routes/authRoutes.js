@@ -1,4 +1,5 @@
 const passport = require('passport');
+const {Song} = require('../models/Song')
 
 module.exports = (app) => {
 	app.get('/auth/spotify', 
@@ -17,7 +18,16 @@ module.exports = (app) => {
 			res.redirect('/dashboard');
 	});
 
-	app.get('/api/logout', (req, res) => {
+	app.delete('/api/logout/:id', (req, res) => {
+		var id = req.params.id;
+		Song.remove({ userId: id }).then((songs) => {
+			res.send(songs)
+		}).catch((e) => {
+			res.status(400).send(e);
+		})
+	});
+
+	app.get('/api/logout/', (req, res) => {
 		req.logout();
 		res.redirect('/');
 	});

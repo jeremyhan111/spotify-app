@@ -32,10 +32,6 @@ class Dashboard extends Component {
 
 	handleOnClick(e) {
 		//this.props.daispatch(placePlaylists(this.state.playlists));
-
-		let songs = [];
-		let tracks;
-
 		if (this.props.auth.user) {
 
 			spotifyapi.setAccessToken(this.props.auth.user.accessToken);
@@ -43,20 +39,18 @@ class Dashboard extends Component {
 			this.state.playlists.forEach((playlist) => {
 				spotifyapi.getPlaylistTracks(playlist.owner.id, playlist.id).then((tracks) => {
 					tracks.items.forEach((track) => {
-						console.log(track.track.name, track.track.id);
-
-						// axios({
-						// 	method: 'post',
-						// 	url: '/api/songs',
-						// 	data: {
-						// 		name: track.track.name,
-						// 		artist: track.track.artists[0].name,
-						// 		uri: track.track.uri,
-						// 		userId: this.props.auth.user.spotifyId
-						// 	}
-						// }).catch((e) => {
-						// 	console.log(e);
-						// })
+						axios({
+							method: 'post',
+							url: '/api/songs',
+							data: {
+								name: track.track.name,
+								artist: track.track.artists[0].name,
+								uri: track.track.uri,
+								userId: this.props.auth.user.spotifyId
+							}
+						}).catch((e) => {
+							console.log(e);
+						})
 					})
 				})
 				

@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import SpotifyWebApi from 'spotify-web-api-js';
 import Track from './Track';
 import axios from 'axios';
-
-
-const spotifyapi = new SpotifyWebApi();
 
 class VotingSystem extends Component {
 	constructor(props) {

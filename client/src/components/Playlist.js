@@ -1,5 +1,4 @@
 import React from 'react';
-import Tracks from './Tracks';
 
 const Playlist = (props) => {
 	return (

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
-import VotingSystem from './VotingSystem';
-import { removeTopSong } from '../actions'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 const spotifyapi = new SpotifyWebApi();
@@ -28,6 +26,18 @@ class Active extends Component {
 				console.log('what');
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
 				spotifyapi.getMyCurrentPlaybackState().then((playback) => {
+					if (playback && playback.progress_ms < 5*interval) {
+						console.log('delete this song');
+
+						axios({
+							method: 'delete',
+							url: `/api/song/${this.props.auth.user.spotifyId}/${playback.item.name}/${playback.item.artists[0].name}`
+						}).then((song) => {
+							console.log('DELETED');
+							console.log(song);
+						})
+					}
+
 					if (playback && (playback.item.duration_ms - playback.progress_ms) < interval+100) {
 						console.log('send api request to play top song');
 						// const topSong = this.getTopSong();
@@ -37,7 +47,7 @@ class Active extends Component {
 						// // 	console.log(e);
 						// // })
 
-						// this.props.dispatch(removeTopSong(topSong));
+						
 					}
 
 					this.setState(() => {
