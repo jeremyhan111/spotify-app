@@ -2,36 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
 import Track from './Track';
+import axios from 'axios';
+
+
 const spotifyapi = new SpotifyWebApi();
 
 class VotingSystem extends Component {
 	constructor(props) {
 		super(props);
 		// this.onClick = this.onClick.bind(this);
-
-		this.state = [{
-			track: {
-				name: "First"
-			}
-		}];
+		this.state = {
+			songs: []
+		}
 	}
 
 	async getSongs() {
-		if (this.props.auth.user) {
-			console.log(this.props)
-			spotifyapi.setAccessToken(this.props.auth.user.accessToken);
-			var songs = []
-			for (var i = 0; i < this.props.playlists.playlists.length; i++) {
-				let playlist = this.props.playlists.playlists[i];
-				const tracks = await spotifyapi.getPlaylistTracks(playlist.owner.id, playlist.id);
-				songs = songs.concat(tracks.items);
-			}
+		axios.get(`/api/songs/${this.props.id}`).then((songs) => {
 			this.setState(() => {
 				return {
-					songs
+					songs: songs.data
 				}
 			})
-		}
+		})
 	}
 
 	componentDidMount() {
@@ -44,7 +36,7 @@ class VotingSystem extends Component {
 				<p>This is the voting system</p>
 				<ol>
 					{this.state.songs && this.state.songs.map((song) => {
-						return <Track track={song} />
+						return <Track userId={this.props.id} track={song} />
 					})}
 				</ol>
 
@@ -54,11 +46,5 @@ class VotingSystem extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		auth: state.auth,
-		playlists: state.playlists
-	}
-}
 
-export default connect(mapStateToProps)(VotingSystem);
+export default VotingSystem;

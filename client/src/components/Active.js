@@ -4,6 +4,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import VotingSystem from './VotingSystem';
 import { removeTopSong } from '../actions'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 const spotifyapi = new SpotifyWebApi();
 
 class Active extends Component {
@@ -13,7 +14,8 @@ class Active extends Component {
 		this.getTopSong = this.getTopSong.bind(this);
 		this.timer = null
 		this.state = {
-			playback: null
+			playback: null,
+			topSong: 'Shuffle mode'
 		}
 	};
 
@@ -21,20 +23,21 @@ class Active extends Component {
 		const interval = 1000;
 
 		this.timer = setInterval(() => {
+			this.getTopSong()
 			if (this.props.auth.user) {
 				console.log('what');
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
 				spotifyapi.getMyCurrentPlaybackState().then((playback) => {
-					if ((playback.item.duration_ms - playback.progress_ms) < interval+100) {
+					if (playback && (playback.item.duration_ms - playback.progress_ms) < interval+100) {
 						console.log('send api request to play top song');
-						const topSong = this.getTopSong();
-						// spotifyapi.play(null, topSong).then((success) => {
-						// 	console.log(success);
-						// }, (e) => {
-						// 	console.log(e);
-						// })
+						// const topSong = this.getTopSong();
+						// // spotifyapi.play(null, topSong).then((success) => {
+						// // 	console.log(success);
+						// // }, (e) => {
+						// // 	console.log(e);
+						// // })
 
-						this.props.dispatch(removeTopSong(topSong));
+						// this.props.dispatch(removeTopSong(topSong));
 					}
 
 					this.setState(() => {
@@ -59,21 +62,17 @@ class Active extends Component {
 	}
 
 	getTopSong() {
-		const topSongs = this.props.topSongs.topSongs;
-		let max = -1;
-		let topSong = 'Shuffle mode';
+		axios({
+			method: 'get',
+			url: '/api/songs/top',
+		}).then((song) => {
+			this.setState(() => {
+				return {
+					topSong: song.data.name
+				};
+			})
+		})
 
-
-		for (var key in topSongs) {
-			if (topSongs.hasOwnProperty(key)) {
-				if (topSongs[key] > max) {
-					max = topSongs[key];
-					topSong = key
-				}
-			}
-		}
-
-		return topSong;
 	}
 
 	componentWillUnmount() {
@@ -84,7 +83,6 @@ class Active extends Component {
 	}
 
 	render() {
-
 		return (
 			<div>
 				<h1>Active Page</h1>
@@ -92,8 +90,12 @@ class Active extends Component {
 				<h3>Now playing</h3>
 				{this.state.playback ? <p>{this.state.playback.item.name}</p> : <p>Spotify is off</p>}
 				<h4>Next song</h4>
-				{<p>{this.getTopSong()}</p>}
+				<p>{this.state.topSong}</p>
 				<h3>Share this link with your friends so they can vote!</h3>
+				{this.props.auth.user && <p>{`whispering-oasis-52041.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
+
+				
+
 				<Link to="/guest">Get All Songs</Link>
 
 			</div>

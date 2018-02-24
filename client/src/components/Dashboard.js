@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 import Playlists from './Playlists';
 import { placePlaylists } from '../actions';
@@ -30,7 +31,39 @@ class Dashboard extends Component {
 	}
 
 	handleOnClick(e) {
-		this.props.dispatch(placePlaylists(this.state.playlists));
+		//this.props.daispatch(placePlaylists(this.state.playlists));
+
+		let songs = [];
+		let tracks;
+
+		if (this.props.auth.user) {
+
+			spotifyapi.setAccessToken(this.props.auth.user.accessToken);
+
+			this.state.playlists.forEach((playlist) => {
+				spotifyapi.getPlaylistTracks(playlist.owner.id, playlist.id).then((tracks) => {
+					tracks.items.forEach((track) => {
+						console.log(track.track.name, track.track.id);
+
+						// axios({
+						// 	method: 'post',
+						// 	url: '/api/songs',
+						// 	data: {
+						// 		name: track.track.name,
+						// 		artist: track.track.artists[0].name,
+						// 		uri: track.track.uri,
+						// 		userId: this.props.auth.user.spotifyId
+						// 	}
+						// }).catch((e) => {
+						// 	console.log(e);
+						// })
+					})
+				})
+				
+			})
+		}
+
+		
 	}
 
 	render() {

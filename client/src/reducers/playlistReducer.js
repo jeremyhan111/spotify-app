@@ -8,10 +8,6 @@ export default function(state = playlistReducerDefaultState, action) {
 			return {
 				playlists: action.playlists
 			}
-		case 'persist/REHYDRATE':
-			return {
-				playlists: action.payload.playlists.playlists
-			}
 		default:
 			return state;
 	};

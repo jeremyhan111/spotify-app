@@ -1,12 +1,10 @@
 import React from 'react';
 import VotingSystem from './VotingSystem';
-import { Link } from 'react-router-dom'
 
-const GuestPage = () => {
+const GuestPage = (props) => {
 	return (
 		<div>
-			<VotingSystem />
-			<Link to="/active">Go back</Link>
+			<VotingSystem id={props.match.params.id}/>
 		</div>
 	)
 };

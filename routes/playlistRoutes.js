@@ -8,7 +8,8 @@ module.exports = (app) => {
 	app.post('/api/playlists', (req, res) => {
 		var playlist = new Playlist({
 			playlistId: req.body.id,
-			uri: req.body.uri
+			uri: req.body.uri,
+			userId: req.body.userId
 		});
 
 		playlist.save().then((playlist) => {
@@ -25,4 +26,15 @@ module.exports = (app) => {
 			res.status(400).send(e);
 		})
 	})
+
+	app.get('/api/playlists/:spotifyId', (req, res) => {
+		var spotifyId = req.params.spotifyId;
+		Playlist.find({userId: spotifyId}).then((playlists) => {
+			console.log(playlists);
+			res.send({playlists});
+		}, (e) => {
+			res.status(400).send(e);
+		})
+	});
+
 }

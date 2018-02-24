@@ -21,7 +21,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/playlistRoutes')(app);
-require('./routes/topSongRoutes')(app);
+require('./routes/songRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

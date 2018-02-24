@@ -8,6 +8,10 @@ const Playlist = mongoose.model('Playlist', {
 	uri: {
 		type: String,
 		required: true
+	},
+	userId: {
+		type: String,
+		required: true
 	}
 });
 

@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
-const Topsong = mongoose.model('Topsong', {
+const Song = mongoose.model('Song', {
 	name: {
 		type: String,
 		required: true
 	},
-	songId: {
+	artist: {
 		type: String,
 		required: true
 	},
@@ -13,10 +13,14 @@ const Topsong = mongoose.model('Topsong', {
 		type: String,
 		required: true
 	}, 
+	userId: {
+		type: String,
+		required: true
+	},
 	count: {
 		type: Number,
 		required: true
 	}
 });
 
-module.exports = {Topsong};
+module.exports = {Song};
