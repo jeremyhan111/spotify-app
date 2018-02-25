@@ -8,11 +8,15 @@ const spotifyapi = new SpotifyWebApi();
 class Active extends Component {
 	constructor(props) {
 		super(props);
-		this.getNextSong = this.getNextSong.bind(this);
+		// this.getNextSong = this.getNextSong.bind(this);
 		this.timer = null
 		this.state = {
 			playback: null,
-			topSong: 'Shuffle mode'
+			topSong: {
+				data: {
+					name: 'Shuffle mode'
+				}
+			}
 		}
 	};
 
@@ -62,16 +66,16 @@ class Active extends Component {
 		}, interval);
 	}
 
-	getNextSong() {
-		if (this.props.auth.user) {
-			this.s.setAccessToken(this.props.auth.user.accessToken);
-			this.s.play(null, ['spotify:track:5J8m6w5VmswbMBYUAFf44t']).then((success) => {
-				console.log(success);
-			}, (e) => {
-				console.log(e);
-			})
-		}
-	}
+	// getNextSong() {
+	// 	if (this.props.auth.user) {
+	// 		this.s.setAccessToken(this.props.auth.user.accessToken);
+	// 		this.s.play(null, ['spotify:track:5J8m6w5VmswbMBYUAFf44t']).then((success) => {
+	// 			console.log(success);
+	// 		}, (e) => {
+	// 			console.log(e);
+	// 		})
+	// 	}
+	// }
 
 	getTopSong() {
 		axios({
@@ -79,13 +83,20 @@ class Active extends Component {
 			url: '/api/songs/top',
 		}).then((song) => {
 			this.setState(() => {
-				let topSong = 'Shuffle mode'
+				let topSong;
+
 				if (song.data) {
-					topSong = song.data.name
+					topSong = song
+				} else {
+					topSong = {
+						data: {
+							name: 'Shuffle mode'
+						}
+					}
 				}
 				return {
 					topSong
-				};
+				}
 			})
 		})
 
@@ -99,14 +110,20 @@ class Active extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>Active Page</h1>
-				<button onClick={()=>{console.log(this.props)}}>Check Props</button>
-				<h3>Now playing</h3>
-				{this.state.playback ? <p>{this.state.playback.item.name}</p> : <p>Spotify is off</p>}
-				<h4>Next song</h4>
-				<p>{this.state.topSong}</p>
-				<h3>Share this link with your friends so they can vote!</h3>
+			<div className="container active">
+				<h1 className="active__header">Party</h1>
+				<div className="active__current">
+					<h3 className="current__header">Now playing</h3>
+					{this.state.playback ? <p>Name: {this.state.playback.item.name}</p> : <p>Spotify is off</p>}
+					{this.state.playback ? <p>Artist: {this.state.playback.item.artists[0].name}</p> : null}
+				</div>
+
+				<div className="active__next">
+					<h4 className="next__header">Next song</h4>
+					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Name: {this.state.topSong.data.name}</p> : <p>{this.state.topSong.data.name}</p>}
+					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Artist: {this.state.topSong.data.artist}</p> : null}
+				</div>
+				<h3>Vote here!</h3>
 				{this.props.auth.user && <p>{`localhost:3000/user/${this.props.auth.user.spotifyId}`}</p>}
 
 			</div>

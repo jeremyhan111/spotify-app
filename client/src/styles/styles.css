@@ -35,3 +35,23 @@ body {
 .header {
   display: flex;
   justify-content: space-between; }
+
+.active__header {
+  font-size: 10rem;
+  letter-spacing: 0.5rem;
+  margin: 1.6rem; }
+
+.active__current {
+  font-size: 1.6rem; }
+
+.current__header {
+  margin: 0.8rem; }
+
+.active__current > p {
+  margin: 0; }
+
+.next__header {
+  margin: 0.8rem; }
+
+.active__next > p {
+  margin: 0; }
