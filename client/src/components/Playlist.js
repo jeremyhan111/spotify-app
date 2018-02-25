@@ -33,6 +33,11 @@ const Playlist = (props) => {
 				 	props.dispatch(addPlaylist(props.playlist));
 				 	spotifyapi.getPlaylistTracks(props.playlist.owner.id, props.playlist.id).then((tracks) => {
 						tracks.items.forEach((track) => {
+							if (track.track.uri.indexOf('local') > -1) {
+								console.log('is local');
+								return;
+							}
+
 							axios({
 								method: 'post',
 								url: '/api/songs',

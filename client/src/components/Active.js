@@ -20,7 +20,7 @@ class Active extends Component {
 		const interval = 1000;
 
 		this.timer = setInterval(() => {
-			this.getTopSong()
+			const song = this.getTopSong()
 			if (this.props.auth.user) {
 				console.log('what');
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
@@ -37,15 +37,19 @@ class Active extends Component {
 						})
 					}
 
-					if (playback && (playback.item.duration_ms - playback.progress_ms) < interval+100) {
+					if (playback && (playback.item.duration_ms - playback.progress_ms) < 3*interval) {
 						console.log('send api request to play top song');
-						// const topSong = this.getTopSong();
-						// // spotifyapi.play(null, topSong).then((success) => {
-						// // 	console.log(success);
-						// // }, (e) => {
-						// // 	console.log(e);
-						// // })
-						
+						axios({
+							method: 'get',
+							url: '/api/songs/top',
+						}).then((song) => {
+							console.log('top song', song);
+							spotifyapi.play({uris: [song.data.uri]}).then((success) => {
+								console.log(success);
+							}, (e) => {
+								console.log(e);
+							})
+						});
 					}
 
 					this.setState(() => {

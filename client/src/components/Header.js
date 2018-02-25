@@ -22,8 +22,13 @@ class Header extends Component {
 
 	render() {
 		return (
-			<div>
-				{this.renderContent()}
+			<div className="container header">
+				<div className="header__logo">
+					Spotify Vote
+				</div>
+				<div className="header__nav">
+					{this.renderContent()}
+				</div>				
 			</div>
 		);
 	}

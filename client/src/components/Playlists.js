@@ -5,7 +5,6 @@ const Playlists = (props) => {
 	console.log(props);
 	return (
 		<div>
-			<h1>Your Playlists</h1>
 			<ol>
 				{props.playlists.map((playlist) => <Playlist 
 										   playlist={playlist}

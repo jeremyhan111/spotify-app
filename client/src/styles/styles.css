@@ -1,0 +1,37 @@
+body {
+  font-family: Circular, Helvetica, Arial, sans-serif; }
+
+.landing {
+  text-align: center; }
+
+.landing__title {
+  font-size: 4.8rem;
+  margin-top: 7rem; }
+
+.landing__subtitle {
+  font-size: 1.6rem;
+  margin-bottom: 7rem; }
+
+.landing__button {
+  font-size: 1.2rem;
+  padding: 18px 48px 16px;
+  background-color: #1db954;
+  border: none;
+  color: white;
+  transition-duration: .3s;
+  letter-spacing: 2px;
+  text-decoration: none;
+  cursor: pointer; }
+
+.landing__button:hover {
+  background-color: #1ed760; }
+
+.container {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 1.6rem;
+  text-align: center; }
+
+.header {
+  display: flex;
+  justify-content: space-between; }

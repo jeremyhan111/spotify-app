@@ -1,0 +1,29 @@
+.landing {
+	text-align: center;
+}
+
+.landing__title {
+	font-size: $xl-size;
+	margin-top: 7rem;
+}
+
+.landing__subtitle {
+	font-size: $m-size;
+	margin-bottom: 7rem;
+}
+
+.landing__button {
+	font-size: $s-size;
+	padding: 18px 48px 16px;
+	background-color: $green;
+	border: none;
+	color: white;
+	transition-duration: .3s;
+	letter-spacing: 2px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.landing__button:hover {
+	background-color: $light-green;
+}

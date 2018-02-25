@@ -36,7 +36,7 @@ class Dashboard extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="container">
 				<h1>Pick your playlists</h1>
 				<h4>Your guests will be able to vote for their favorite songs from the playlists you pick</h4>
 				
