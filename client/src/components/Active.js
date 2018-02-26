@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import QRCode from 'qrcode.react';
+
+
 const spotifyapi = new SpotifyWebApi();
 
 class Active extends Component {
@@ -136,7 +139,8 @@ class Active extends Component {
 					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Artist: {this.state.topSong.data.artist}</p> : null}
 				</div>
 				<h3>Vote here!</h3>
-				{this.props.auth.user && <p>{`localhost:3000/user/${this.props.auth.user.spotifyId}`}</p>}
+				{this.props.auth.user && <p>{`whispering-oasis-52041.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
+				{this.props.auth.user && <QRCode value={`whispering-oasis-52041.herokuapp.com/user/${this.props.auth.user.spotifyId}`}/>}
 
 			</div>
 		);

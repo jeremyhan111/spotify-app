@@ -22,6 +22,10 @@ class Dashboard extends Component {
 		setTimeout(this.getPlaylists, 1000);
 	}
 
+	componentWillReceiveProps() {
+		this.getPlaylists();
+	}
+
 	async getPlaylists() {
 		if (this.props.auth.user) {
 			spotifyapi.setAccessToken(this.props.auth.user.accessToken);

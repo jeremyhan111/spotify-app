@@ -10,7 +10,7 @@ import Landing from './Landing';
 import Dashboard from './Dashboard';
 import Active from './Active';
 import GuestPage from './GuestPage';
-
+import Footer from './Footer'
 
 
 class App extends Component {
