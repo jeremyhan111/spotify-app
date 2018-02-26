@@ -5,13 +5,11 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import QRCode from 'qrcode.react';
 
-
 const spotifyapi = new SpotifyWebApi();
 
 class Active extends Component {
 	constructor(props) {
 		super(props);
-		// this.getNextSong = this.getNextSong.bind(this);
 		this.timer = null
 		this.state = {
 			playback: null,
@@ -21,8 +19,8 @@ class Active extends Component {
 				}
 			}
 		}
-
-		this.endOfSong = false;
+		this.firstSong = true;
+		this.endOfSong = true;
 		this.shuffleMode = true;
 	};
 
@@ -30,10 +28,12 @@ class Active extends Component {
 		const interval = 1000;
 
 		this.timer = setInterval(() => {
-			const song = this.getTopSong()
+			this.getTopSong()
+			console.log(this.state);
 			if (this.props.auth.user) {
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
 				spotifyapi.getMyCurrentPlaybackState().then((playback) => {
+
 					if (playback && playback.progress_ms < 5*interval && !this.endOfSong) {
 						this.endOfSong = true;
 						console.log('beginning');
@@ -48,38 +48,41 @@ class Active extends Component {
 					if (playback && (playback.item.duration_ms - playback.progress_ms) < 3*interval && this.endOfSong) {
 						this.endOfSong = false;
 						console.log('end');
-						axios({
-							method: 'get',
-							url: '/api/songs/top',
-						}).then((song) => {
-							let context;
-							if (song.data === "") { //if no top song
-								if (!this.shuffleMode) {
+
+						const song = this.state.topSong;
+
+						let context;
+
+						console.log(song.data);
+
+						if (song.data.name === "Shuffle mode") { //if no top song
+							if (!this.shuffleMode) {
+								const randomNum = Math.floor(Math.random()*this.props.playlists.length);
+								console.log(randomNum);
+								const playlist = this.props.playlists[randomNum];
+								console.log(this.props.playlists);
+								this.shuffleMode = true;
+								context = {context_uri: playlist.uri}		//play random playlist
+							} else {
+								if (this.firstSong) {
 									const randomNum = Math.floor(Math.random()*this.props.playlists.length);
-									console.log(this.props);
+									console.log(randomNum);
 									const playlist = this.props.playlists[randomNum];
-									console.log(playlist);
-									this.shuffleMode = true;
-									context = {context_uri: playlist.uri}		//play random playlist
+									console.log(this.props.playlists);
+									this.firstSong = false;
+									context = {context_uri: playlist.uri}
 								} else {
 									return;
 								}
-							} else { //else play top song
-								this.shuffleMode = false;
-								context = {uris: [song.data.uri]};
 							}
+						} else { //else play top song
+							this.shuffleMode = false;
+							context = {uris: [song.data.uri]};
+						}
 
+						console.log(context);
 
-							spotifyapi.play(context, (e, value) => {
-								console.log('e', e);
-								console.log('value', value);
-							})
-							// .then((success) => {
-							// 	console.log(success);
-							// }, (e) => {
-							// 	console.log(e);
-							// })
-						});
+						spotifyapi.play(context);
 					}
 
 					this.setState(() => {
