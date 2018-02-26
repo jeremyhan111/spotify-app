@@ -19,7 +19,7 @@ class Dashboard extends Component {
 	}
 
 	componentDidMount() {
-		setTimeout(this.getPlaylists, 100);
+		setTimeout(this.getPlaylists, 1000);
 	}
 
 	async getPlaylists() {
