@@ -142,7 +142,7 @@ class Active extends Component {
 				{this.props.auth.user && <p>{`spotifyvote.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
 				{this.props.auth.user && <QRCode 
 				fgColor={"#00BFFF"}
-				value={`http://whispering-oasis-52041.herokuapp.com/user/${this.props.auth.user.spotifyId}`}/>}
+				value={`http://spotifyvote.herokuapp.com/user/${this.props.auth.user.spotifyId}`}/>}
 
 			</div>
 		);
