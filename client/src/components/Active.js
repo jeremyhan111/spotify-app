@@ -139,7 +139,7 @@ class Active extends Component {
 					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Artist: {this.state.topSong.data.artist}</p> : null}
 				</div>
 				<h3>Vote here!</h3>
-				{this.props.auth.user && <p>{`whispering-oasis-52041.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
+				{this.props.auth.user && <p>{`spotifyvote.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
 				{this.props.auth.user && <QRCode 
 				fgColor={"#00BFFF"}
 				value={`http://whispering-oasis-52041.herokuapp.com/user/${this.props.auth.user.spotifyId}`}/>}
