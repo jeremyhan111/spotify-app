@@ -100,3 +100,9 @@ a:-webkit-any-link {
 .playlists__list {
   display: flex;
   flex-wrap: wrap; }
+
+.track__button {
+  padding: 0.8rem;
+  border: none;
+  background-color: #1ed760;
+  margin: 0.3rem; }

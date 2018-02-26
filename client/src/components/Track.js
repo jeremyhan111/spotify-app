@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Track = (props) => {
 	return (
-		<li><button onClick={(e) => {
+		<button className="track__button" onClick={(e) => {
 			console.log(`/api/songs/${props.userId}/${props.track.name}/${props.track.artist}`);
 			axios({
 				method: 'patch',
@@ -14,7 +14,7 @@ const Track = (props) => {
 
 		}}>
 			{props.track.name}
-		</button></li>
+		</button>
 	);
 }
 
