@@ -1,6 +1,18 @@
 body {
   font-family: Circular, Helvetica, Arial, sans-serif; }
 
+ol {
+  padding: 0;
+  list-style-type: none; }
+
+ul {
+  list-style-type: none; }
+
+a:-webkit-any-link {
+  color: black;
+  cursor: pointer;
+  text-decoration: none; }
+
 .landing {
   text-align: center; }
 
@@ -34,10 +46,26 @@ body {
 
 .header {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  font-size: 1.2rem; }
+
+.header__logo {
+  font-weight: bold;
+  transition-duration: .3s;
+  text-decoration: none; }
+
+.header__logo:hover {
+  color: #1db954; }
+
+.header__nav > a {
+  margin: 0 0.8rem;
+  transition-duration: .3s; }
+
+.header__nav > a:hover {
+  color: #1db954; }
 
 .active__header {
-  font-size: 10rem;
+  font-size: 5rem;
   letter-spacing: 0.5rem;
   margin: 1.6rem; }
 
@@ -55,3 +83,20 @@ body {
 
 .active__next > p {
   margin: 0; }
+
+@media (min-width: 45rem) {
+  .active__header {
+    font-size: 10rem; } }
+
+.playlist__img-container {
+  flex-grow: 1; }
+
+.playlist__album-img {
+  transition-duration: .3s; }
+
+.playlist__album-img:hover {
+  opacity: 0.3; }
+
+.playlists__list {
+  display: flex;
+  flex-wrap: wrap; }

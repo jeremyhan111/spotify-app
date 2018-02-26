@@ -10,8 +10,14 @@ const spotifyapi = new SpotifyWebApi();
 const Playlist = (props) => {
 	console.log(props);
 	return (
-		<div>
-			{<img src={props.playlist.images[1] ? props.playlist.images[1].url : replace}
+		<div className="playlist__img-container" >
+			{<img className="playlist__album-img"
+				src={props.playlist.images[1] ? props.playlist.images[1].url : replace}
+				
+				onHover={() => {
+					console.log(props.playlist.name);
+				}}
+
 				onClick={()=>{
 				 	for (var i = 0; i < props.playlists.length; i++) {
 				 		if (props.playlists[i].uri === props.playlist.uri) {

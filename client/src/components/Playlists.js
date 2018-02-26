@@ -4,8 +4,8 @@ import Playlist from './Playlist';
 const Playlists = (props) => {
 	console.log(props);
 	return (
-		<div>
-			<ol>
+		<div className="container playlists">
+			<ol className="playlists__list">
 				{props.playlists.map((playlist) => <Playlist 
 										   playlist={playlist}
 										   key={playlist.uri}

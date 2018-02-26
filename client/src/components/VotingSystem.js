@@ -5,7 +5,6 @@ import axios from 'axios';
 class VotingSystem extends Component {
 	constructor(props) {
 		super(props);
-		// this.onClick = this.onClick.bind(this);
 		this.state = {
 			songs: []
 		}
@@ -27,8 +26,8 @@ class VotingSystem extends Component {
 
 	render() {
 		return (
-			<div>
-				<p>This is the voting system</p>
+			<div className="container">
+				<h2>Vote for your favorite songs</h2>
 				<ol>
 					{this.state.songs && this.state.songs.map((song) => {
 						return <Track userId={this.props.id} track={song} />

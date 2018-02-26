@@ -1,5 +1,5 @@
 .active__header {
-	font-size: 10rem;
+	font-size: 5rem;
 	letter-spacing: 0.5rem;
 	margin: $m-size;
 }
@@ -22,4 +22,10 @@
 
 .active__next > p {
 	margin: 0;
+}
+
+@media (min-width: $desktop-breakpoint) {
+	.active__header {
+		font-size: 10rem;
+	}
 }

@@ -1,0 +1,12 @@
+.playlist__img-container {
+	flex-grow: 1;
+}
+
+.playlist__album-img {
+	transition-duration: .3s;
+}
+
+.playlist__album-img:hover {
+	opacity: 0.3;
+}
+

@@ -18,6 +18,9 @@ class Active extends Component {
 				}
 			}
 		}
+
+		this.endOfSong = false;
+		this.shuffleMode = true;
 	};
 
 	componentDidMount() {
@@ -26,33 +29,53 @@ class Active extends Component {
 		this.timer = setInterval(() => {
 			const song = this.getTopSong()
 			if (this.props.auth.user) {
-				console.log('what');
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
 				spotifyapi.getMyCurrentPlaybackState().then((playback) => {
-					if (playback && playback.progress_ms < 5*interval) {
-						console.log('delete this song');
-
+					if (playback && playback.progress_ms < 5*interval && !this.endOfSong) {
+						this.endOfSong = true;
+						console.log('beginning');
 						axios({
 							method: 'delete',
 							url: `/api/song/${this.props.auth.user.spotifyId}/${playback.item.name}/${playback.item.artists[0].name}`
 						}).then((song) => {
-							console.log('DELETED');
 							console.log(song);
 						})
 					}
 
-					if (playback && (playback.item.duration_ms - playback.progress_ms) < 3*interval) {
-						console.log('send api request to play top song');
+					if (playback && (playback.item.duration_ms - playback.progress_ms) < 3*interval && this.endOfSong) {
+						this.endOfSong = false;
+						console.log('end');
 						axios({
 							method: 'get',
 							url: '/api/songs/top',
 						}).then((song) => {
-							console.log('top song', song);
-							spotifyapi.play({uris: [song.data.uri]}).then((success) => {
-								console.log(success);
-							}, (e) => {
-								console.log(e);
+							let context;
+							if (song.data === "") { //if no top song
+								if (!this.shuffleMode) {
+									const randomNum = Math.floor(Math.random()*this.props.playlists.length);
+									console.log(this.props);
+									const playlist = this.props.playlists[randomNum];
+									console.log(playlist);
+									this.shuffleMode = true;
+									context = {context_uri: playlist.uri}		//play random playlist
+								} else {
+									return;
+								}
+							} else { //else play top song
+								this.shuffleMode = false;
+								context = {uris: [song.data.uri]};
+							}
+
+
+							spotifyapi.play(context, (e, value) => {
+								console.log('e', e);
+								console.log('value', value);
 							})
+							// .then((success) => {
+							// 	console.log(success);
+							// }, (e) => {
+							// 	console.log(e);
+							// })
 						});
 					}
 
@@ -65,17 +88,6 @@ class Active extends Component {
 			}
 		}, interval);
 	}
-
-	// getNextSong() {
-	// 	if (this.props.auth.user) {
-	// 		this.s.setAccessToken(this.props.auth.user.accessToken);
-	// 		this.s.play(null, ['spotify:track:5J8m6w5VmswbMBYUAFf44t']).then((success) => {
-	// 			console.log(success);
-	// 		}, (e) => {
-	// 			console.log(e);
-	// 		})
-	// 	}
-	// }
 
 	getTopSong() {
 		axios({

@@ -1,12 +1,24 @@
 .header {
 	display: flex;
 	justify-content: space-between;
+	font-size: $s-size;
 }
 
 .header__logo {
-
+	font-weight: bold;
+	transition-duration: .3s;
+	text-decoration: none;
 }
 
-.header__nav {
+.header__logo:hover {
+	color: $green;
+}
 
+.header__nav > a {
+	margin: 0 $xs-size;
+	transition-duration: .3s;
+}
+
+.header__nav > a:hover {
+	color: $green;
 }

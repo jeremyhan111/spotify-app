@@ -4,3 +4,18 @@ html {
 body {
 	font-family: Circular, Helvetica, Arial, sans-serif;
 }
+
+ol {
+	padding: 0;
+	list-style-type: none;
+}
+
+ul {
+	list-style-type: none;
+}
+
+a:-webkit-any-link {
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
