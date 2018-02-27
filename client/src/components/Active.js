@@ -143,27 +143,31 @@ class Active extends Component {
 	}
 
 	getTopSong() {
-		axios({
-			method: 'get',
-			url: '/api/songs/top',
-		}).then((song) => {
-			this.setState(() => {
-				let topSong;
+		if (this.props.auth.user) {
+			console.log(`/api/songs/top/${this.props.auth.user.spotifyId}`);
+			axios({
+				method: 'get',
+				url: `/api/songs/top/${this.props.auth.user.spotifyId}`,
+			}).then((song) => {
+				console.log(song);
+				this.setState(() => {
+					let topSong;
 
-				if (song.data) {
-					topSong = song
-				} else {
-					topSong = {
-						data: {
-							name: 'Shuffle mode'
+					if (song.data) {
+						topSong = song
+					} else {
+						topSong = {
+							data: {
+								name: 'Shuffle mode'
+							}
 						}
 					}
-				}
-				return {
-					topSong
-				}
+					return {
+						topSong
+					}
+				})
 			})
-		})
+		}
 
 	}
 

@@ -39,8 +39,10 @@ module.exports = (app) => {
 		})
 	})
 
-	app.get('/api/songs/top', (req, res) => {
+	app.get('/api/songs/top/:id', (req, res) => {
+		var id = req.params.id;
 		Song.find({
+			userId: id,
 			count: { $gt: 0 }
 		})
 		.sort({ count: -1})
