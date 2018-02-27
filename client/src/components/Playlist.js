@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
 import axios from 'axios';
@@ -7,67 +7,93 @@ import replace from '../images/no-album.jpg'
 import { addPlaylist, removePlaylist } from '../actions';
 const spotifyapi = new SpotifyWebApi();
 
-const Playlist = (props) => {
-	console.log(props);
-	return (
-		<div className="playlist__img-container" >
-			<img className="playlist__album-img"
-				src={props.playlist.images[1] ? props.playlist.images[1].url : replace}
-				
-				onHover={() => {
-					console.log(props.playlist.name);
-				}}
+class Playlist extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			disabled: true
+		}
 
-				onClick={()=>{
-				 	for (var i = 0; i < props.playlists.length; i++) {
-				 		if (props.playlists[i].uri === props.playlist.uri) {
-				 			console.log('ALREADY IN HERE THO');
-				 			props.dispatch(removePlaylist(props.playlist));
-				 			axios({
-								method: 'delete',
-								url: '/api/songs',
-								data: {
-									playlistId: props.playlist.id
-								}
-							}).catch((e) => {
-								console.log(e);
-							})
+	}
 
-				 			return;
-				 		}
-				 	}
-				 	props.dispatch(addPlaylist(props.playlist));
-				 	spotifyapi.getPlaylistTracks(props.playlist.owner.id, props.playlist.id).then((tracks) => {
-						tracks.items.forEach((track) => {
-							if (track.track.uri.indexOf('local') > -1) {
-								console.log('is local');
-								return;
+	deletePlaylist() {
+		for (var i = 0; i < this.props.playlists.length; i++) {
+			if (this.props.playlists[i].uri === this.props.playlist.uri) {
+				this.props.dispatch(removePlaylist(this.props.playlist));
+
+				axios({
+					method: 'delete',
+					url: '/api/songs',
+					data: {
+						playlistId: this.props.playlist.id
+					}
+				}).catch((e) => {
+					console.log(e);
+				})
+
+		 		return true;
+	 		}
+	 	}
+
+	 	return false
+
+	}
+
+	addPlaylist () {
+		this.props.dispatch(addPlaylist(this.props.playlist));
+		spotifyapi.getPlaylistTracks(this.props.playlist.owner.id, this.props.playlist.id).then((tracks) => {
+			tracks.items.forEach((track) => {
+				if (track.track.uri.indexOf('local') > -1) {
+					console.log('is local');
+					return;
+				}
+
+				axios({
+					method: 'post',
+					url: '/api/songs',
+					data: {
+						name: track.track.name,
+						artist: track.track.artists[0].name,
+						uri: track.track.uri,
+						userId: this.props.auth.user.spotifyId,
+						playlistId: this.props.playlist.id
+					}
+				}).catch((e) => {
+					console.log(e);
+				})
+			})
+		})
+	}
+
+
+
+	render() {
+		return (
+			<div className="playlist__img-container" >
+			
+			
+				<img className="playlist__album-img"
+					visited={this.state.disabled}
+					src={this.props.playlist.images[1] ? this.props.playlist.images[1].url : replace}
+					onClick={() => { //deletes playlist
+						console.log(this.state.disabled);
+						console.log(this.props);
+						if (!this.deletePlaylist()) {
+							this.addPlaylist()
+						}
+						this.setState(() => {
+							return {
+								disabled: true
 							}
-
-							axios({
-								method: 'post',
-								url: '/api/songs',
-								data: {
-									name: track.track.name,
-									artist: track.track.artists[0].name,
-									uri: track.track.uri,
-									userId: props.auth.user.spotifyId,
-									playlistId: props.playlist.id
-								}
-							}).catch((e) => {
-								console.log(e);
-							})
 						})
-					})
 
-
-
-				 }}/>
-				<div className="overlay">
-				 	<p className="album-img__description">{props.playlist.name}</p>
-				</div>
-		</div>
-	);
+					 }}/>
+					<div className="overlay">
+					 	<p className="album-img__description">{this.props.playlist.name}</p>
+					</div>
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = (state) => {

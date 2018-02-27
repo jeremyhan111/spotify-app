@@ -4,9 +4,23 @@
 
 .playlist__album-img {
 	transition-duration: .3s;
+	z-index: 10;
 }
 
 .playlist__album-img:hover {
-	opacity: 0.3;
+	opacity: 0;
 }
+
+.overlay {
+	position: relative;
+	bottom: 180px;
+	z-index: 1;
+	visibility: 0;
+}
+
+
+.album-img__description:hover {
+
+}
+
 

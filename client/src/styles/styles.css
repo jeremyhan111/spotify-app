@@ -92,10 +92,17 @@ a:-webkit-any-link {
   flex-grow: 1; }
 
 .playlist__album-img {
-  transition-duration: .3s; }
+  transition-duration: .3s;
+  z-index: 10; }
 
 .playlist__album-img:hover {
-  opacity: 0.3; }
+  opacity: 0; }
+
+.overlay {
+  position: relative;
+  bottom: 180px;
+  z-index: 1;
+  visibility: 0; }
 
 .playlists__list {
   display: flex;
@@ -106,3 +113,6 @@ a:-webkit-any-link {
   border: none;
   background-color: #1ed760;
   margin: 0.3rem; }
+
+.track__button:disabled {
+  opacity: 0.5; }
