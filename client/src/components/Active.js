@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
 import axios from 'axios';
 import QRCode from 'qrcode.react';
 
@@ -10,8 +11,11 @@ const spotifyapi = new SpotifyWebApi();
 class Active extends Component {
 	constructor(props) {
 		super(props);
-		this.timer = null
+		this.changeColors = this.changeColors.bind(this);
+		this.timer = null;
+		this.colorTimer = null;
 		this.state = {
+			lights: false,
 			playback: null,
 			topSong: {
 				data: {
@@ -22,13 +26,41 @@ class Active extends Component {
 		this.firstSong = true;
 		this.endOfSong = true;
 		this.shuffleMode = true;
+		this.colors = ['blue', 'teal', 'green', 'red', 'yellow', 'orange', 'purple'];
 	};
+
+
+	changeColors() {
+		var letters = document.getElementsByClassName("header__letter");
+		for (var i = 0; i < letters.length; i++) {
+			const randomNum = Math.floor(Math.random()*this.colors.length);
+			const color = this.colors[randomNum];
+
+			if (letters[i].classList.length > 1) {
+				letters[i].classList.remove(letters[i].classList[1]);
+			}
+
+			letters[i].classList.add(color);
+		}
+	}
+
+	clearLights() {
+		var letters = document.getElementsByClassName("header__letter");
+		for (var i = 0; i < letters.length; i++) {
+			if (letters[i].classList.length > 1) {
+				letters[i].classList.remove(letters[i].classList[1]);
+			}
+		}
+	}
 
 	componentDidMount() {
 		const interval = 1000;
 
+
+
 		this.timer = setInterval(() => {
 			this.getTopSong()
+
 			console.log(this.state);
 			if (this.props.auth.user) {
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
@@ -129,7 +161,32 @@ class Active extends Component {
 	render() {
 		return (
 			<div className="container active">
-				<h1 className="active__header">Party</h1>
+				<div className="active__header">
+					<h3 className="header__letter">P</h3>
+					<h3 className="header__letter">A</h3>
+					<h3 className="header__letter">R</h3>
+					<h3 className="header__letter">T</h3>
+					<h3 className="header__letter">Y</h3>
+				</div>
+
+				<input onClick={() => {
+					if (!this.state.lights) {
+						this.colorTimer = setInterval(this.changeColors, 150);
+					} else {
+						this.clearLights();
+						clearInterval(this.colorTimer);
+					}
+
+					this.setState((prevState) => {
+						return {
+							lights: !prevState.lights
+						}
+					})
+
+				}}
+				type="checkbox" name="switch" id="switch"/>
+				<label className="switch" for="switch"></label>
+
 				<div className="active__current">
 					<h3 className="current__header">Now playing</h3>
 					{this.state.playback ? <p>Name: {this.state.playback.item.name}</p> : <p>Spotify is off</p>}

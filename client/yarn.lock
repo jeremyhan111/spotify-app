@@ -5504,6 +5504,12 @@ react-scripts@1.1.1:
   optionalDependencies:
     fsevents "^1.1.3"
 
+react-switch-button@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/react-switch-button/-/react-switch-button-2.3.3.tgz#24606945c3ec0cf0d8fa4967e974005681f5c9b6"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-vote@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/react-vote/-/react-vote-3.3.0.tgz#0f0d13b6be3f8c4979cbde87f7f9814d877577cc"
