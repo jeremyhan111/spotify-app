@@ -65,7 +65,7 @@ a:-webkit-any-link {
   color: #1db954; }
 
 .switch {
-  display: block;
+  display: inline-block;
   position: relative;
   width: 14px;
   height: 20px;

@@ -15,6 +15,7 @@ class Active extends Component {
 		this.timer = null;
 		this.colorTimer = null;
 		this.state = {
+			error: "",
 			lights: false,
 			playback: null,
 			topSong: {
@@ -42,6 +43,8 @@ class Active extends Component {
 
 			letters[i].classList.add(color);
 		}
+
+
 	}
 
 	clearLights() {
@@ -63,6 +66,7 @@ class Active extends Component {
 
 			console.log(this.state);
 			if (this.props.auth.user) {
+
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
 				spotifyapi.getMyCurrentPlaybackState().then((playback) => {
 
@@ -89,14 +93,25 @@ class Active extends Component {
 
 						if (song.data.name === "Shuffle mode") { //if no top song
 							if (!this.shuffleMode) {
+								console.log("ahhhhasdfs")
+
+								if (this.props.playlists.length === 0) {
+									console.log('this is a bug i need to fix. it occurs because someone refreshes the page or for some reaosn has zero playlists picked');
+									return;
+								}
+
 								const randomNum = Math.floor(Math.random()*this.props.playlists.length);
-								console.log(randomNum);
 								const playlist = this.props.playlists[randomNum];
-								console.log(this.props.playlists);
 								this.shuffleMode = true;
 								context = {context_uri: playlist.uri}		//play random playlist
 							} else {
+
+								console.log('ahhh');
 								if (this.firstSong) {
+									if (this.props.playlists.length === 0) {
+										return;
+									}
+
 									const randomNum = Math.floor(Math.random()*this.props.playlists.length);
 									console.log(randomNum);
 									const playlist = this.props.playlists[randomNum];
@@ -156,6 +171,10 @@ class Active extends Component {
 		if (this.timer) {
 			clearInterval(this.timer);
 		}
+
+		if (this.colorTimer) {
+			clearInterval(this.colorTimer);
+		}
 	}
 
 	render() {
@@ -169,23 +188,25 @@ class Active extends Component {
 					<h3 className="header__letter">Y</h3>
 				</div>
 
-				<input onClick={() => {
-					if (!this.state.lights) {
-						this.colorTimer = setInterval(this.changeColors, 150);
-					} else {
-						this.clearLights();
-						clearInterval(this.colorTimer);
-					}
-
-					this.setState((prevState) => {
-						return {
-							lights: !prevState.lights
+				<div className="light-switch">
+					<input onClick={() => {
+						if (!this.state.lights) {
+							this.colorTimer = setInterval(this.changeColors, 150);
+						} else {
+							this.clearLights();
+							clearInterval(this.colorTimer);
 						}
-					})
 
-				}}
-				type="checkbox" name="switch" id="switch"/>
-				<label className="switch" for="switch"></label>
+						this.setState((prevState) => {
+							return {
+								lights: !prevState.lights
+							}
+						})
+
+					}}
+					type="checkbox" name="switch" id="switch"/>
+					<label className="switch" for="switch"></label>
+				</div>
 
 				<div className="active__current">
 					<h3 className="current__header">Now playing</h3>
