@@ -13,6 +13,7 @@ class Playlist extends Component {
 		this.state = {
 			disabled: true
 		}
+		this.disabled = false;
 
 	}
 
@@ -72,12 +73,20 @@ class Playlist extends Component {
 			<div className="playlist__img-container" >
 			
 			
-				<img className="playlist__album-img"
-					visited={this.state.disabled}
+				<img className={`playlist__album-img album-${this.props.playlist.name}`}
 					src={this.props.playlist.images[1] ? this.props.playlist.images[1].url : replace}
 					onClick={() => { //deletes playlist
-						console.log(this.state.disabled);
-						console.log(this.props);
+						if (!this.disabled) {
+							var element = document.getElementsByClassName(`album-${this.props.playlist.name}`);
+							element[0].classList.add('picked');
+							this.disabled = true;
+							
+						} else {
+							var element = document.getElementsByClassName(`album-${this.props.playlist.name}`);
+							element[0].classList.remove('picked');
+							this.disabled = false;
+						}
+						
 						if (!this.deletePlaylist()) {
 							this.addPlaylist()
 						}

@@ -178,13 +178,16 @@ a:-webkit-any-link {
   z-index: 10; }
 
 .playlist__album-img:hover {
-  opacity: 0; }
+  opacity: 0.3; }
 
 .overlay {
   position: relative;
   bottom: 180px;
   z-index: 1;
   visibility: 0; }
+
+.picked {
+  opacity: 0.3; }
 
 .playlists__list {
   display: flex;
