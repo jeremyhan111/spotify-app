@@ -11,7 +11,7 @@ const Playlist = (props) => {
 	console.log(props);
 	return (
 		<div className="playlist__img-container" >
-			{<img className="playlist__album-img"
+			<img className="playlist__album-img"
 				src={props.playlist.images[1] ? props.playlist.images[1].url : replace}
 				
 				onHover={() => {
@@ -62,7 +62,10 @@ const Playlist = (props) => {
 
 
 
-				 }}/>}
+				 }}/>
+				<div className="overlay">
+				 	<p className="album-img__description">{props.playlist.name}</p>
+				</div>
 		</div>
 	);
 }
