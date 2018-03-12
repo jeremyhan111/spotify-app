@@ -11,7 +11,7 @@ class Header extends Component {
 			case null:
 				return;
 			case "":
-				return <a href="/auth/spotify/">Login</a>;
+				return <a href="/auth/spotify">Login</a>;
 			default:
 				return <a href={'/api/logout'}
 					onClick={()=> {

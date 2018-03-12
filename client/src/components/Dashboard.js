@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { Link } from 'react-router-dom'
-import axios from 'axios';
 
 import Playlists from './Playlists';
 import { placePlaylists } from '../actions';
