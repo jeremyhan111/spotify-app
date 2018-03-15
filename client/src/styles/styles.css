@@ -35,6 +35,9 @@ a:-webkit-any-link {
   text-decoration: none;
   cursor: pointer; }
 
+.landing__button:disabled {
+  opacity: .5; }
+
 .landing__button:hover {
   background-color: #1ed760; }
 

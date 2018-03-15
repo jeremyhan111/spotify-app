@@ -44,7 +44,7 @@ class Dashboard extends Component {
 				<h4>Your guests will be able to vote for their favorite songs from the playlists you pick</h4>
 				
 				<Playlists playlists={this.state.playlists}/>
-				<Link to={'/active'}><button className="landing__button">LET'S START</button></Link>
+				<Link to={'/active'}><button disabled={this.props.playlists.length == 0} className="landing__button">LET'S START</button></Link>
 			</div>
 		);
 	}
@@ -52,7 +52,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		auth: state.auth
+		auth: state.auth,
+		playlists: state.playlists
 	}
 }
 
