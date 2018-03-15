@@ -10,16 +10,7 @@ class VotingSystem extends Component {
 		this.state = {
 			artists: []
 		}
-	}
-
-	// this.state = {
-	// 	artists: []
-	// 	each item in pairs is a pair of artist and songs:
-	// 	{
-	// 		name: 'Nujabes',
-	// 		songs: [song1, song2, song3]
-	// 	}
-	// }
+	}x
 
 	async getSongs() {
 		axios.get(`/api/songs/${this.props.id}`).then((songs) => {
