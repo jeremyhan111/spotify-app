@@ -15,7 +15,7 @@ module.exports = (app) => {
 	app.get('/auth/spotify/callback', 
 		passport.authenticate('spotify'),
 		(req, res) => {
-			res.redirect('/dashboard');
+			res.redirect('/');
 	});
 
 	app.delete('/api/logout/:id', (req, res) => {
@@ -27,12 +27,13 @@ module.exports = (app) => {
 		})
 	});
 
-	app.get('/api/logout/', (req, res) => {
+	app.get('/api/logout', (req, res) => {
 		req.logout();
 		res.redirect('/');
 	});
 
 	app.get('/api/current_user', (req, res) => {
+		console.log(req);
 		res.send(req.user);
 	})
 };

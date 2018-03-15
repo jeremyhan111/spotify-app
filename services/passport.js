@@ -32,6 +32,6 @@ passport.use(
 			return done(null, replace);
 		}
 		const newUser = await new User({spotifyId: profile.id, accessToken, refreshToken}).save();
-		done(null, user);	
+		return done(null, newUser);	
 	})
 );

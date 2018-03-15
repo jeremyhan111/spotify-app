@@ -43,8 +43,6 @@ class Active extends Component {
 
 			letters[i].classList.add(color);
 		}
-
-
 	}
 
 	clearLights() {
@@ -58,8 +56,6 @@ class Active extends Component {
 
 	componentDidMount() {
 		const interval = 1000;
-
-
 
 		this.timer = setInterval(() => {
 			this.getTopSong()
@@ -83,7 +79,6 @@ class Active extends Component {
 
 					if (playback && (playback.item.duration_ms - playback.progress_ms) < 3*interval && this.endOfSong) {
 						this.endOfSong = false;
-						console.log('end');
 
 						const song = this.state.topSong;
 
@@ -93,7 +88,6 @@ class Active extends Component {
 
 						if (song.data.name === "Shuffle mode") { //if no top song
 							if (!this.shuffleMode) {
-								console.log("ahhhhasdfs")
 
 								if (this.props.playlists.length === 0) {
 									console.log('this is a bug i need to fix. it occurs because someone refreshes the page or for some reaosn has zero playlists picked');
@@ -106,7 +100,6 @@ class Active extends Component {
 								context = {context_uri: playlist.uri}		//play random playlist
 							} else {
 
-								console.log('ahhh');
 								if (this.firstSong) {
 									if (this.props.playlists.length === 0) {
 										return;
