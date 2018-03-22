@@ -10,11 +10,17 @@ const spotifyapi = new SpotifyWebApi();
 class Playlist extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			disabled: true
-		}
 		this.disabled = false;
+	}
 
+	componentDidMount() {
+		this.props.playlists.forEach((playlist) => {
+			if (playlist.uri === this.props.playlist.uri) {
+				var element = document.getElementsByClassName(`album-${this.props.playlist.name}`);
+				element[0].classList.add('picked');
+				this.disabled = true;
+			}
+		})
 	}
 
 	deletePlaylist() {
@@ -35,9 +41,7 @@ class Playlist extends Component {
 		 		return true;
 	 		}
 	 	}
-
 	 	return false
-
 	}
 
 	addPlaylist () {
@@ -72,7 +76,6 @@ class Playlist extends Component {
 		return (
 			<div className="playlist__img-container" >
 			
-			
 				<img className={`playlist__album-img album-${this.props.playlist.name}`}
 					src={this.props.playlist.images[1] ? this.props.playlist.images[1].url : replace}
 					onClick={() => { //deletes playlist
@@ -90,11 +93,6 @@ class Playlist extends Component {
 						if (!this.deletePlaylist()) {
 							this.addPlaylist()
 						}
-						this.setState(() => {
-							return {
-								disabled: true
-							}
-						})
 
 					 }}/>
 					<div className="overlay">

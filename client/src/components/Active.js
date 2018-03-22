@@ -207,7 +207,7 @@ class Active extends Component {
 
 				<div className="active__current">
 					<h3 className="current__header">Now playing</h3>
-					{this.state.playback ? <p>Name: {this.state.playback.item.name}</p> : <p>Spotify is off</p>}
+					{this.state.playback ? <p>Name: {this.state.playback.item.name}</p> : <p>Open up Spotify and play a song!</p>}
 					{this.state.playback ? <p>Artist: {this.state.playback.item.artists[0].name}</p> : null}
 				</div>
 
@@ -216,7 +216,9 @@ class Active extends Component {
 					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Name: {this.state.topSong.data.name}</p> : <p>{this.state.topSong.data.name}</p>}
 					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Artist: {this.state.topSong.data.artist}</p> : null}
 				</div>
-				<h3>Vote here!</h3>
+				<h3>	Share this link with your friends so they can vote! <br/>
+						Or, have them scan the QR code to be redirected to the voting site
+				</h3>
 				{this.props.auth.user && <p>{`spotifyvote.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
 				{this.props.auth.user && <QRCode 
 				fgColor={"#00BFFF"}
