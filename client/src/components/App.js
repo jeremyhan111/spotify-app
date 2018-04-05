@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import { fetchUser } from '../actions';
 import axios from 'axios';
 
-
 import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';

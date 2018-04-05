@@ -52,7 +52,6 @@ class Playlist extends Component {
 					console.log('is local');
 					return;
 				}
-
 				axios({
 					method: 'post',
 					url: '/api/songs',
@@ -94,10 +93,11 @@ class Playlist extends Component {
 							this.addPlaylist()
 						}
 
-					 }}/>
-					<div className="overlay">
-					 	<p className="album-img__description">{this.props.playlist.name}</p>
-					</div>
+					 }}
+				/>
+				<div className="overlay">
+				 	<p className="album-img__description">{this.props.playlist.name}</p>
+				</div>
 			</div>
 		);
 	}

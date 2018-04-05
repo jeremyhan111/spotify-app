@@ -8,6 +8,7 @@ import reducers from './reducers';
 import './styles/styles.css'
 
 
+
 const store = createStore(
 	reducers
 );

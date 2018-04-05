@@ -174,23 +174,25 @@ a:-webkit-any-link {
     height: 50px; } }
 
 .playlist__img-container {
-  flex-grow: 1; }
+  display: flex;
+  flex-direction: column; }
 
 .playlist__album-img {
   transition-duration: .3s;
-  z-index: 10; }
+  z-index: 20; }
 
 .playlist__album-img:hover {
-  opacity: 0.3; }
+  opacity: 0.2; }
 
 .overlay {
   position: relative;
   bottom: 180px;
-  z-index: 1;
-  visibility: 0; }
+  z-index: 10;
+  visibility: 0;
+  font-weight: bold; }
 
 .picked {
-  opacity: 0.3; }
+  opacity: 0.2; }
 
 .playlists__list {
   display: flex;
