@@ -23,7 +23,8 @@
     "mongodb": "^3.0.2",
     "mongoose": "^5.0.6",
     "passport": "^0.4.0",
-    "passport-spotify": "^1.0.0"
+    "passport-spotify": "^1.0.0",
+    "react-modal": "^3.3.2"
   },
   "devDependencies": {
     "concurrently": "^3.5.1"

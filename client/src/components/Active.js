@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { Link } from 'react-router-dom';
-
 import axios from 'axios';
 import QRCode from 'qrcode.react';
+import Modal from 'react-modal';
 
 const spotifyapi = new SpotifyWebApi();
 
@@ -15,6 +15,7 @@ class Active extends Component {
 		this.timer = null;
 		this.colorTimer = null;
 		this.state = {
+			modal: true,
 			error: "",
 			lights: false,
 			playback: null,
@@ -28,6 +29,7 @@ class Active extends Component {
 		this.endOfSong = true;
 		this.shuffleMode = true;
 		this.colors = ['blue', 'teal', 'green', 'red', 'yellow', 'orange', 'purple'];
+
 	};
 
 
@@ -177,6 +179,28 @@ class Active extends Component {
 	render() {
 		return (
 			<div className="container active">
+
+
+
+				<Modal
+					isOpen={this.state.modal}
+					contentLabel="Selected Option"
+					ariaHideApp={false}
+					closeTimeoutMS={200}
+					className="modal"
+				>
+					<p><b>Note:</b> Make sure to keep this page open during the entire duration of your party!</p>
+					<button 
+						className="landing__button"
+						onClick={() => {
+							this.setState(() => {
+								return {
+									modal: false
+								}
+							})
+					}}>GOTCHA</button>
+				</Modal>
+
 				<div className="active__header">
 					<h3 className="header__letter">P</h3>
 					<h3 className="header__letter">A</h3>
