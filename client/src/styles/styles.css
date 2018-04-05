@@ -83,6 +83,7 @@ a:-webkit-any-link {
   opacity: 0; }
 
 .modal {
+  box-shadow: 0 0 1px #777777;
   background: white;
   color: black;
   max-width: 30rem;

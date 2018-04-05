@@ -37,8 +37,7 @@ class Dashboard extends Component {
 		return (
 			<div className="container">
 				<h1>Pick your playlists</h1>
-				<h4>Your guests will be able to vote for their favorite songs from the playlists you pick</h4>
-				
+				<h4>Your guests will be able to vote for their favorite songs from the playlists you pick</h4>	
 				<Playlists playlists={this.state.playlists}/>
 				<Link to={'/active'}><button disabled={this.props.playlists.length == 0} className="landing__button">LET'S START</button></Link>
 			</div>

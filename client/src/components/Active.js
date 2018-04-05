@@ -180,7 +180,9 @@ class Active extends Component {
 					closeTimeoutMS={200}
 					className="modal"
 				>
-					<p><b>Important:</b> Make sure to keep this page open during the entire duration of your party!</p>
+					<p><b>Important:</b> Make sure to keep this page open during the entire duration of your party! The app will 
+						automatically play the next song. Share the link on the page or ask your guests to scan the QR code so that
+						they can vote. </p>
 					<button 
 						className="landing__button"
 						onClick={() => {
