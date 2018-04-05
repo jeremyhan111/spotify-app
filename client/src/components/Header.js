@@ -35,11 +35,6 @@ class Header extends Component {
 					<Link to="/dashboard">
 						Music
 					</Link>
-					<Link to="/active">
-						Party
-					</Link>
-
-
 					{this.renderContent()}
 				</div>				
 			</div>

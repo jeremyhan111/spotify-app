@@ -26,6 +26,15 @@
   text-align: center;
 }
 
+.switch__container {
+  position: absolute;
+}
+
+.light-switch {
+  position: relative;
+  top: 4rem;
+}
+
 .switch {
   display: inline-block;
   position: relative;
@@ -130,6 +139,10 @@
 
 .active__next > p {
 	margin: 0;
+}
+
+.active__vote-link {
+  font-size: $m-size;
 }
 
 .blue {

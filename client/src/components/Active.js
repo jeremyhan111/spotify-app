@@ -61,8 +61,6 @@ class Active extends Component {
 
 		this.timer = setInterval(() => {
 			this.getTopSong()
-
-			console.log(this.state);
 			if (this.props.auth.user) {
 
 				spotifyapi.setAccessToken(this.props.auth.user.accessToken);
@@ -86,7 +84,6 @@ class Active extends Component {
 
 						let context;
 
-						console.log(song.data);
 
 						if (song.data.name === "Shuffle mode") { //if no top song
 							if (!this.shuffleMode) {
@@ -108,9 +105,7 @@ class Active extends Component {
 									}
 
 									const randomNum = Math.floor(Math.random()*this.props.playlists.length);
-									console.log(randomNum);
 									const playlist = this.props.playlists[randomNum];
-									console.log(this.props.playlists);
 									this.firstSong = false;
 									context = {context_uri: playlist.uri}
 								} else {
@@ -121,9 +116,6 @@ class Active extends Component {
 							this.shuffleMode = false;
 							context = {uris: [song.data.uri]};
 						}
-
-						console.log(context);
-
 						spotifyapi.play(context);
 					}
 
@@ -139,7 +131,6 @@ class Active extends Component {
 
 	getTopSong() {
 		if (this.props.auth.user) {
-			console.log(`/api/songs/top/${this.props.auth.user.spotifyId}`);
 			axios({
 				method: 'get',
 				url: `/api/songs/top/${this.props.auth.user.spotifyId}`,
@@ -189,7 +180,7 @@ class Active extends Component {
 					closeTimeoutMS={200}
 					className="modal"
 				>
-					<p><b>Note:</b> Make sure to keep this page open during the entire duration of your party!</p>
+					<p><b>Important:</b> Make sure to keep this page open during the entire duration of your party!</p>
 					<button 
 						className="landing__button"
 						onClick={() => {
@@ -202,6 +193,28 @@ class Active extends Component {
 				</Modal>
 
 				<div className="active__header">
+					<div className="switch__container">
+						<div className="light-switch">
+							<input onClick={() => {
+								if (!this.state.lights) {
+									this.colorTimer = setInterval(this.changeColors, 150);
+								} else {
+									this.clearLights();
+									clearInterval(this.colorTimer);
+								}
+
+								this.setState((prevState) => {
+									return {
+										lights: !prevState.lights
+									}
+								})
+
+							}}
+							type="checkbox" name="switch" id="switch"/>
+							<label className="switch" for="switch"></label>
+						</div>
+					</div>
+
 					<h3 className="header__letter">P</h3>
 					<h3 className="header__letter">A</h3>
 					<h3 className="header__letter">R</h3>
@@ -209,26 +222,7 @@ class Active extends Component {
 					<h3 className="header__letter">Y</h3>
 				</div>
 
-				<div className="light-switch">
-					<input onClick={() => {
-						if (!this.state.lights) {
-							this.colorTimer = setInterval(this.changeColors, 150);
-						} else {
-							this.clearLights();
-							clearInterval(this.colorTimer);
-						}
-
-						this.setState((prevState) => {
-							return {
-								lights: !prevState.lights
-							}
-						})
-
-					}}
-					type="checkbox" name="switch" id="switch"/>
-					<label className="switch" for="switch"></label>
-				</div>
-
+				
 				<div className="active__current">
 					<h3 className="current__header">Now playing</h3>
 					{this.state.playback ? <p>Name: {this.state.playback.item.name}</p> : <p>Open up Spotify and play a song!</p>}
@@ -240,14 +234,17 @@ class Active extends Component {
 					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Name: {this.state.topSong.data.name}</p> : <p>{this.state.topSong.data.name}</p>}
 					{this.state.topSong.data.name !== 'Shuffle mode' ? <p>Artist: {this.state.topSong.data.artist}</p> : null}
 				</div>
-				<h3>	Share this link with your friends so they can vote! <br/>
-						Or, have them scan the QR code to be redirected to the voting site
-				</h3>
-				{this.props.auth.user && <p>{`spotifyvote.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
+
+				<h3>Scan here to vote!</h3>
 				{this.props.auth.user && <QRCode 
 				fgColor={"#00BFFF"}
 				value={`http://spotifyvote.herokuapp.com/user/${this.props.auth.user.spotifyId}`}/>}
+				<h3>Or go to this link!</h3>
+				{this.props.auth.user && <p className="active__vote-link">{`spotifyvote.herokuapp.com/user/${this.props.auth.user.spotifyId}`}</p>}
 
+
+				
+	
 			</div>
 		);
 	}
